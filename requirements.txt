@@ -1,0 +1,4 @@
+customtkinter
+scapy
+pyfiglet
+tqdm
