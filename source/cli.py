@@ -1,10 +1,10 @@
 from subprocess import run, PIPE
 from scapy.all import ARP, Ether, srp, ICMP, IP, sr1
-from time import sleep
 from tqdm import tqdm
 import ipaddress
 import logging
 logging.getLogger("scapy.runtime").setLevel(logging.ERROR) 
+import pyfiglet
 
 # Color text functions
 def ctxt(text): print(f"\033[36m{text}\033[0m")  # Cyan
@@ -12,6 +12,14 @@ def rtxt(text): print(f"\033[31m{text}\033[0m")  # Red
 def lbtxt(text, end="\n"): print(f"\033[94m{text}\033[0m", end=end)  # Light Blue
 def lmtxt(text): print(f"\033[95m{text}\033[0m")  # Light Magenta
 def ytxt(text): print(f"\033[33m{text}\033[0m")  # Yellow
+
+def display_banner():
+    banner_text = "Ping Sweep"
+    styled_banner = pyfiglet.figlet_format(banner_text, font="slant")
+    rtxt(styled_banner)
+    lbtxt("Github : 0xAbolfazl\n".center(20, " "))
+    lbtxt("="*60)
+    print()
 
 def validate_ip(network_part):
     """Validate the first three octets of an IP address"""
@@ -175,9 +183,6 @@ def combined_scan(network, start, end, timeout):
 def ping_sweep_runner():
     """Main function to run the scanner"""
     try:
-        print("\n" + "="*50)
-        lbtxt("[~] NETWORK SCANNER TOOL", end="\n\n")
-        
         # Get scan parameters once
         try:
             network, timeout, start, end = get_scan_parameters()
@@ -208,4 +213,5 @@ def ping_sweep_runner():
         rtxt(f"[!] ERROR: {str(e)}")
 
 if __name__ == '__main__':
+    display_banner()
     ping_sweep_runner()
